@@ -3,85 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turismo Almería - Tu Guía Inteligente</title>
-    <meta name="description" content="Descubre los mejores lugares de interés en Almería, España. Cultura, monumentos, gastronomía y más.">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2563eb">
+    <title>Turismo Almería - Guía Premium</title>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#003358">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://picsum.photos/seed/almeria/192/192">
+    
+    <!-- Scripts & Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <span class="logo-icon">☀️</span>
-                <h1>Almería<span>Turismo</span></h1>
-            </div>
-            <div class="nav-controls">
-                <button id="install-btn" class="btn-secondary" style="display: none;">Instalar App</button>
-            </div>
-        </nav>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#003358",
+                        "secondary": "#775930",
+                        "background": "#f4fafd",
+                        "surface": "#ffffff",
+                        "on-surface": "#161d1f",
+                        "on-surface-variant": "#42474f",
+                        "secondary-container": "#ffd6a3",
+                        "on-secondary-container": "#795b32",
+                        "outline": "#727780",
+                        "outline-variant": "#c1c7d0"
+                    },
+                    "fontFamily": {
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hero-gradient { background: linear-gradient(180deg, rgba(0, 51, 88, 0) 0%, rgba(0, 51, 88, 0.7) 100%); }
+        #map-view { height: calc(100vh - 160px); width: 100%; border-radius: 24px; overflow: hidden; }
         
-        <div class="filters-container">
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Buscar lugares...">
-                <span class="search-icon">🔍</span>
+        /* Modal Custom Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-secondary-container">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-outline-variant/30 sticky top-0 z-40">
+        <div class="flex items-center justify-between px-5 h-16 max-w-[1200px] mx-auto">
+            <div class="flex items-center gap-4">
+                <button class="text-primary p-2 rounded-full hover:bg-background transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="font-display text-2xl font-bold text-primary tracking-tight">Almería</h1>
             </div>
-            <div class="category-filters" id="category-filters">
-                <button class="filter-chip active" data-category="todos">Todos</button>
-                <button class="filter-chip" data-category="cultura">Cultura</button>
-                <button class="filter-chip" data-category="museos">Museos</button>
-                <button class="filter-chip" data-category="restaurantes">Restaurantes</button>
-                <button class="filter-chip" data-category="monumentos históricos">Monumentos</button>
-                <button class="filter-chip" data-category="recintos deportivos">Deportes</button>
+            <nav class="hidden md:flex items-center gap-8">
+                <button onclick="App.setView('cards')" class="view-nav text-primary font-bold border-b-2 border-primary py-1" data-view="cards">Explorar</button>
+                <button onclick="App.setView('list')" class="view-nav text-outline py-1 hover:text-primary transition-colors" data-view="list">Lista</button>
+                <button onclick="App.setView('map')" class="view-nav text-outline py-1 hover:text-primary transition-colors" data-view="map">Mapa</button>
+                <button onclick="App.setView('weather')" class="view-nav text-outline py-1 hover:text-primary transition-colors" data-view="weather">Clima</button>
+            </nav>
+            <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-secondary-container">
+                <img src="https://picsum.photos/seed/user/100/100" alt="User">
             </div>
         </div>
     </header>
 
-    <main id="app-content">
-        <!-- Views will be rendered here -->
-        <div id="loading-spinner" class="spinner"></div>
+    <main class="max-w-[1200px] mx-auto pb-32">
+        <!-- Search & Filters -->
+        <section id="search-filter-section" class="mt-8 px-5">
+            <div class="max-w-2xl mb-8">
+                <h2 id="view-title" class="font-display text-3xl font-bold text-primary mb-2">Serenidad Mediterránea</h2>
+                <p id="view-subtitle" class="text-body-lg text-on-surface-variant">Descubre los tesoros ocultos de la costa volcánica y la historia viva de Almería.</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative mb-6 max-w-2xl">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+                <input type="text" id="search-input" placeholder="Busca monumentos, museos o restaurantes..." 
+                    class="w-full bg-white border border-outline-variant rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all">
+            </div>
+
+            <!-- Category Chips -->
+            <div class="flex overflow-x-auto gap-3 hide-scrollbar pb-2" id="category-filters">
+                <button class="category-btn flex-none px-6 py-2 bg-primary text-white rounded-full text-sm font-semibold active" data-category="todos">Todo</button>
+                <button class="category-btn flex-none px-6 py-2 bg-white text-on-surface border border-outline-variant rounded-full text-sm font-semibold hover:bg-secondary-container/30" data-category="cultura">Cultura</button>
+                <button class="category-btn flex-none px-6 py-2 bg-white text-on-surface border border-outline-variant rounded-full text-sm font-semibold hover:bg-secondary-container/30" data-category="museos">Museos</button>
+                <button class="category-btn flex-none px-6 py-2 bg-white text-on-surface border border-outline-variant rounded-full text-sm font-semibold hover:bg-secondary-container/30" data-category="restaurantes">Restaurantes</button>
+                <button class="category-btn flex-none px-6 py-2 bg-white text-on-surface border border-outline-variant rounded-full text-sm font-semibold hover:bg-secondary-container/30" data-category="monumentos históricos">Monumentos</button>
+                <button class="category-btn flex-none px-6 py-2 bg-white text-on-surface border border-outline-variant rounded-full text-sm font-semibold hover:bg-secondary-container/30" data-category="recintos deportivos">Deportes</button>
+            </div>
+        </section>
+
+        <!-- View Containers -->
+        <div id="cards-view" class="view-container mt-12 px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be rendered here -->
+        </div>
+
+        <div id="list-view" class="view-container mt-12 px-5 hidden space-y-4 max-w-3xl mx-auto">
+            <!-- List items will be rendered here -->
+        </div>
+
+        <div id="map-view-container" class="view-container mt-8 px-5 hidden">
+            <div id="map-view" class="shadow-xl border border-white"></div>
+        </div>
+
+        <div id="weather-view" class="view-container mt-8 px-5 hidden">
+            <!-- Weather will be rendered here -->
+        </div>
     </main>
 
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-view="cards" id="nav-cards">
-            <span class="nav-icon">🎴</span>
-            <span class="nav-label">Tarjetas</span>
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-20 bg-white/95 backdrop-blur-md border-t border-outline-variant/30 z-50">
+        <button onclick="App.setView('cards')" class="nav-btn flex flex-col items-center gap-1 text-primary active" data-view="cards">
+            <span class="material-symbols-outlined">explore</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Explorar</span>
         </button>
-        <button class="nav-item" data-view="lista" id="nav-lista">
-            <span class="nav-icon">📜</span>
-            <span class="nav-label">Lista</span>
+        <button onclick="App.setView('list')" class="nav-btn flex flex-col items-center gap-1 text-outline" data-view="list">
+            <span class="material-symbols-outlined">format_list_bulleted</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Lista</span>
         </button>
-        <button class="nav-item" data-view="mapa" id="nav-mapa">
-            <span class="nav-icon">📍</span>
-            <span class="nav-label">Mapa</span>
+        <button onclick="App.setView('map')" class="nav-btn flex flex-col items-center gap-1 text-outline" data-view="map">
+            <span class="material-symbols-outlined">map</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Mapa</span>
         </button>
-        <button class="nav-item" data-view="clima" id="nav-clima">
-            <span class="nav-icon">🌤️</span>
-            <span class="nav-label">Clima</span>
+        <button onclick="App.setView('weather')" class="nav-btn flex flex-col items-center gap-1 text-outline" data-view="weather">
+            <span class="material-symbols-outlined">sunny</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Clima</span>
         </button>
     </nav>
 
-    <!-- Modal for details -->
-    <div id="details-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <div id="modal-body"></div>
+    <!-- Modal -->
+    <div id="place-modal" class="modal">
+        <div class="modal-content" id="modal-body">
+            <!-- Modal content rendered by JS -->
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="weather.js" type="module"></script>
-    <script src="map.js" type="module"></script>
-    <script src="main.js" type="module"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+    <script src="weather.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

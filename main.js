@@ -1,311 +1,322 @@
-import { initMap, renderMapMarkers } from './map.js';
-import { fetchWeather, renderWeather } from './weather.js';
+// Application State
+const state = {
+    places: [],
+    filteredPlaces: [],
+    currentView: 'cards',
+    filters: {
+        text: '',
+        category: 'todos'
+    }
+};
 
-let places = [];
-let currentCategory = 'todos';
-let searchQuery = '';
-let currentView = 'cards';
-
-const appContent = document.getElementById('app-content');
+// DOM Elements
+const cardsView = document.getElementById('cards-view');
+const listView = document.getElementById('list-view');
+const mapViewContainer = document.getElementById('map-view-container');
+const weatherView = document.getElementById('weather-view');
 const searchInput = document.getElementById('search-input');
-const categoryFilters = document.querySelectorAll('.filter-chip');
-const navItems = document.querySelectorAll('.nav-item');
-const modal = document.getElementById('details-modal');
-const closeModal = document.querySelector('.close-modal');
+const categoryFilters = document.getElementById('category-filters');
+const modal = document.getElementById('place-modal');
+const viewTitle = document.getElementById('view-title');
+const viewSubtitle = document.getElementById('view-subtitle');
 
-// Load Data
-async function loadPlaces() {
+// Initialize App
+async function init() {
     try {
         const response = await fetch('lista.json');
-        places = await response.json();
+        state.places = await response.json();
+        state.filteredPlaces = [...state.places];
+        
+        setupEventListeners();
         renderCurrentView();
+        registerSW();
     } catch (error) {
-        console.error('Error loading places:', error);
-        appContent.innerHTML = '<p class="error">Error al cargar los lugares. Por favor, intenta de nuevo.</p>';
+        console.error('Error loading data:', error);
     }
 }
 
-// Rendering Functions
-function renderCurrentView() {
-    const filteredPlaces = filterPlaces();
-    
-    appContent.innerHTML = '';
-    
-    if (filteredPlaces.length === 0) {
-        appContent.innerHTML = `
-            <div class="empty-state">
-                <span style="font-size: 3rem;">🔍</span>
-                <p>No se encontraron lugares que coincidan con tu búsqueda.</p>
-                <button class="btn-secondary" onclick="resetFilters()" style="margin-top: 15px;">Limpiar filtros</button>
-            </div>
-        `;
-        return;
-    }
+function setupEventListeners() {
+    // Search
+    searchInput.addEventListener('input', (e) => {
+        state.filters.text = e.target.value.toLowerCase();
+        filterPlaces();
+    });
 
-    if (currentView === 'cards') {
-        renderCards(filteredPlaces);
-    } else if (currentView === 'lista') {
-        renderList(filteredPlaces);
-    } else if (currentView === 'mapa') {
-        renderMapView(filteredPlaces);
-    } else if (currentView === 'clima') {
-        renderWeatherView();
-    }
+    // Categories
+    categoryFilters.addEventListener('click', (e) => {
+        const btn = e.target.closest('.category-btn');
+        if (!btn) return;
+
+        document.querySelectorAll('.category-btn').forEach(b => {
+            b.classList.remove('bg-primary', 'text-white');
+            b.classList.add('bg-white', 'text-on-surface');
+        });
+        btn.classList.remove('bg-white', 'text-on-surface');
+        btn.classList.add('bg-primary', 'text-white');
+
+        state.filters.category = btn.dataset.category;
+        filterPlaces();
+    });
+
+    // Close modal
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            closeModal();
+        }
+    };
 }
 
 function filterPlaces() {
-    return places.filter(place => {
-        const matchesCategory = currentCategory === 'todos' || place.tipo === currentCategory;
-        const matchesSearch = place.nombre.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                             place.descripcion.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
+    state.filteredPlaces = state.places.filter(place => {
+        const matchesText = place.nombre.toLowerCase().includes(state.filters.text) || 
+                           place.descripcion.toLowerCase().includes(state.filters.text);
+        const matchesCategory = state.filters.category === 'todos' || 
+                               place.tipo.toLowerCase() === state.filters.category.toLowerCase();
+        return matchesText && matchesCategory;
     });
+    renderCurrentView();
 }
 
-function renderCards(data) {
-    const grid = document.createElement('div');
-    grid.className = 'cards-grid';
+function setView(view) {
+    state.currentView = view;
     
-    data.forEach(place => {
-        const card = document.createElement('div');
-        card.className = 'place-card';
-        card.innerHTML = `
-            <img src="${place.imagen}" alt="${place.nombre}" loading="lazy">
-            <div class="place-card-info">
-                <span class="place-tag">${place.tipo}</span>
-                <h3>${place.nombre}</h3>
-                <p>${place.descripcion}</p>
-            </div>
-        `;
-        card.addEventListener('click', () => showDetails(place));
-        grid.appendChild(card);
+    // Update active nav state
+    document.querySelectorAll('.view-nav, .nav-btn').forEach(el => {
+        if (el.dataset.view === view) {
+            el.classList.add('text-primary', 'font-bold');
+            el.classList.remove('text-outline');
+            if (el.classList.contains('view-nav')) el.classList.add('border-b-2', 'border-primary');
+        } else {
+            el.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary');
+            el.classList.add('text-outline');
+        }
     });
-    
-    appContent.appendChild(grid);
-}
 
-function renderList(data) {
-    const container = document.createElement('div');
-    container.className = 'list-container';
-    
-    data.forEach(place => {
-        const item = document.createElement('div');
-        item.className = 'list-item';
-        item.innerHTML = `
-            <img src="${place.imagen}" alt="${place.nombre}">
-            <div class="list-item-info">
-                <h3>${place.nombre}</h3>
-                <span>${place.tipo}</span>
-            </div>
-        `;
-        item.addEventListener('click', () => showDetails(place));
-        container.appendChild(item);
-    });
-    
-    appContent.appendChild(container);
-}
-
-function renderMapView(data) {
-    const mapContainer = document.createElement('div');
-    mapContainer.id = 'map';
-    appContent.appendChild(mapContainer);
-    
-    // Initialize map after it's in the DOM
-    setTimeout(() => {
-        const map = initMap();
-        renderMapMarkers(map, data, showDetails);
-    }, 100);
-}
-
-async function renderWeatherView() {
-    const container = document.createElement('div');
-    container.className = 'weather-container';
-    container.innerHTML = '<div class="spinner"></div>';
-    appContent.appendChild(container);
-    
-    const weatherData = await fetchWeather();
-    if (weatherData) {
-        renderWeather(container, weatherData);
+    // Update Titles
+    if (view === 'cards' || view === 'list') {
+        viewTitle.textContent = 'Serenidad Mediterránea';
+        viewSubtitle.textContent = 'Descubre los tesoros ocultos de la costa volcánica y la historia viva de Almería.';
+        document.getElementById('search-filter-section').classList.remove('hidden');
+    } else if (view === 'map') {
+        viewTitle.textContent = 'Mapa Interactivo';
+        viewSubtitle.textContent = 'Localiza todos los puntos de interés y planifica tu ruta.';
+        document.getElementById('search-filter-section').classList.add('hidden');
     } else {
-        container.innerHTML = '<p>Error al obtener información meteorológica.</p>';
+        viewTitle.textContent = 'Pronóstico del Tiempo';
+        viewSubtitle.textContent = 'Consulta el clima en Almería para los próximos días.';
+        document.getElementById('search-filter-section').classList.add('hidden');
+    }
+
+    renderCurrentView();
+}
+
+function renderCurrentView() {
+    // Hide all
+    [cardsView, listView, mapViewContainer, weatherView].forEach(v => v.classList.add('hidden'));
+
+    if (state.currentView === 'cards') {
+        cardsView.classList.remove('hidden');
+        renderCards();
+    } else if (state.currentView === 'list') {
+        listView.classList.remove('hidden');
+        renderList();
+    } else if (state.currentView === 'map') {
+        mapViewContainer.classList.remove('hidden');
+        initMap(state.filteredPlaces);
+    } else if (state.currentView === 'weather') {
+        weatherView.classList.remove('hidden');
+        renderWeather();
     }
 }
 
-// Modal logic
-function showDetails(place) {
-    const modalBody = document.getElementById('modal-body');
-    modalBody.innerHTML = `
-        <div class="modal-header-img">
-            <img src="${place.imagen}" class="modal-hero" alt="${place.nombre}">
-            <div class="modal-overlay-info">
-                <span class="place-tag">${place.tipo}</span>
-                <h2>${place.nombre}</h2>
+function renderStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    let starsHtml = '';
+    
+    for (let i = 0; i < 5; i++) {
+        if (i < fullStars) {
+            starsHtml += '<span class="material-symbols-outlined text-sm" style="font-variation-settings: \'FILL\' 1;">star</span>';
+        } else if (i === fullStars && hasHalfStar) {
+            starsHtml += '<span class="material-symbols-outlined text-sm" style="font-variation-settings: \'FILL\' 1;">star_half</span>';
+        } else {
+            starsHtml += '<span class="material-symbols-outlined text-sm">star</span>';
+        }
+    }
+    return starsHtml;
+}
+
+function renderCards() {
+    cardsView.innerHTML = state.filteredPlaces.map(place => `
+        <div onclick="App.showDetails(${place.id})" class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+                <img src="${place.imagen}" alt="${place.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 hero-gradient"></div>
+                <div class="absolute bottom-4 left-4 right-4">
+                    <span class="bg-primary/30 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-2 inline-block">
+                        ${place.tipo}
+                    </span>
+                    <h3 class="text-white font-display font-bold text-xl">${place.nombre}</h3>
+                    <div class="flex items-center gap-1 text-secondary-container mt-1">
+                        ${renderStars(place.puntuacion)}
+                        <span class="text-xs ml-1 text-white/90">${place.puntuacion}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5">
+                <p class="text-on-surface-variant text-sm line-clamp-2">${place.descripcion}</p>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-primary font-bold text-xs uppercase tracking-tighter">Ver detalles</span>
+                    <button onclick="event.stopPropagation(); App.sharePlace(${place.id})" class="text-outline hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-lg">share</span>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="modal-info">
-            <p class="modal-desc">${place.long_descripcion || place.descripcion}</p>
+    `).join('');
+}
+
+function renderList() {
+    listView.innerHTML = state.filteredPlaces.map(place => `
+        <div onclick="App.showDetails(${place.id})" class="group bg-white border border-outline-variant/30 rounded-2xl p-3 flex gap-4 items-center hover:shadow-lg transition-all cursor-pointer">
+            <div class="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+                <img src="${place.imagen}" alt="${place.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-1 block">${place.tipo}</span>
+                    <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors text-sm">arrow_forward_ios</span>
+                </div>
+                <h3 class="font-display font-bold text-primary leading-tight mb-1">${place.nombre}</h3>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center text-secondary">
+                        ${renderStars(place.puntuacion)}
+                        <span class="text-xs font-bold ml-1">${place.puntuacion}</span>
+                    </div>
+                    <div class="flex items-center text-outline">
+                        <span class="material-symbols-outlined text-xs">location_on</span>
+                        <span class="text-xs ml-1">Almería</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showDetails(id) {
+    const place = state.places.find(p => p.id === id);
+    const modalBody = document.getElementById('modal-body');
+    
+    modalBody.innerHTML = `
+        <div class="relative h-[300px]">
+            <img src="${place.imagen}" class="w-full h-full object-cover" alt="${place.nombre}">
+            <button onclick="App.closeModal()" class="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white hover:text-primary transition-all">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+                <span class="bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-2 inline-block">${place.tipo}</span>
+                <h2 class="text-3xl font-display font-bold text-white">${place.nombre}</h2>
+                <div class="flex items-center gap-1 text-secondary-container mt-2">
+                    ${renderStars(place.puntuacion)}
+                    <span class="text-sm ml-1 text-white">${place.puntuacion} • Puntuación de Google</span>
+                </div>
+            </div>
+        </div>
+        <div class="p-8">
+            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">${place.long_descripcion || place.descripcion}</p>
             
-            <div class="info-grid">
-                <div class="info-item">
-                    <span class="info-icon">📍</span>
-                    <div class="info-text">
-                        <strong>Dirección</strong>
-                        <p>${place.direccion || 'No disponible'}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-background rounded-xl text-primary">
+                        <span class="material-symbols-outlined">location_on</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-outline uppercase tracking-widest">Dirección</span>
+                        <p class="text-on-surface font-semibold">${place.direccion || 'Consultar mapa'}</p>
                     </div>
                 </div>
-                <div class="info-item">
-                    <span class="info-icon">🕒</span>
-                    <div class="info-text">
-                        <strong>Horario</strong>
-                        <p>${place.horario || 'No disponible'}</p>
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-background rounded-xl text-primary">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-outline uppercase tracking-widest">Horario</span>
+                        <p class="text-on-surface font-semibold">${place.horario || 'Abierto 24h'}</p>
                     </div>
                 </div>
-                <div class="info-item">
-                    <span class="info-icon">📞</span>
-                    <div class="info-text">
-                        <strong>Teléfono</strong>
-                        <p>${place.telefono || 'No disponible'}</p>
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-background rounded-xl text-primary">
+                        <span class="material-symbols-outlined">call</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-outline uppercase tracking-widest">Teléfono</span>
+                        <p class="text-on-surface font-semibold">${place.telefono || 'No disponible'}</p>
                     </div>
                 </div>
-                ${place.web && place.web !== 'N/A' ? `
-                <div class="info-item">
-                    <span class="info-icon">🌐</span>
-                    <div class="info-text">
-                        <strong>Sitio Web</strong>
-                        <p><a href="${place.web}" target="_blank" style="color: var(--primary); text-decoration: none;">Visitar web oficial</a></p>
+                ${place.web ? `
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-background rounded-xl text-primary">
+                        <span class="material-symbols-outlined">language</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-outline uppercase tracking-widest">Sitio Web</span>
+                        <a href="${place.web}" target="_blank" class="text-primary font-bold hover:underline">Visitar web oficial</a>
                     </div>
                 </div>
                 ` : ''}
             </div>
-            
-            <div class="modal-actions">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}" target="_blank" class="btn-primary">
-                    <span>🚗</span> Cómo llegar
-                </a>
-                <button class="btn-secondary" id="share-toggle-btn">
-                    <span>📤</span> Compartir
-                </button>
-            </div>
 
-            <div id="share-menu" class="share-menu hidden">
-                <button class="share-option whatsapp" onclick="shareTo('whatsapp', ${JSON.stringify(place).replace(/"/g, '&quot;')})">
-                    <span>📱</span> WhatsApp
-                </button>
-                <button class="share-option telegram" onclick="shareTo('telegram', ${JSON.stringify(place).replace(/"/g, '&quot;')})">
-                    <span>✈️</span> Telegram
-                </button>
-                <button class="share-option native" id="native-share-btn">
-                    <span>🔗</span> Otras opciones
+            <div class="flex flex-wrap gap-4 pt-8 border-t border-outline-variant/30">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}" target="_blank" 
+                   class="flex-1 min-w-[200px] flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-2xl font-bold hover:shadow-lg transition-all active:scale-95">
+                    <span class="material-symbols-outlined">directions</span> Cómo llegar
+                </a>
+                <button onclick="App.sharePlace(${place.id})" 
+                        class="flex-1 min-w-[200px] flex items-center justify-center gap-2 bg-secondary-container text-on-secondary-container py-4 rounded-2xl font-bold hover:shadow-lg transition-all active:scale-95">
+                    <span class="material-symbols-outlined">share</span> Compartir sitio
                 </button>
             </div>
         </div>
     `;
     
     modal.style.display = 'block';
-    
-    const shareToggle = document.getElementById('share-toggle-btn');
-    const shareMenu = document.getElementById('share-menu');
-    const nativeShare = document.getElementById('native-share-btn');
-
-    shareToggle.addEventListener('click', () => {
-        shareMenu.classList.toggle('hidden');
-    });
-
-    nativeShare.addEventListener('click', () => {
-        sharePlace(place);
-    });
 }
 
-window.shareTo = (platform, place) => {
-    const text = encodeURIComponent(`¡Mira este lugar en Almería! ${place.nombre}: ${place.descripcion}`);
-    const url = encodeURIComponent(window.location.href);
-    let shareUrl = '';
+function closeModal() {
+    modal.style.display = 'none';
+}
 
-    if (platform === 'whatsapp') {
-        shareUrl = `https://wa.me/?text=${text}%20${url}`;
-    } else if (platform === 'telegram') {
-        shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
-    }
-
-    window.open(shareUrl, '_blank');
-};
-
-async function sharePlace(place) {
+async function sharePlace(id) {
+    const place = state.places.find(p => p.id === id);
     if (navigator.share) {
         try {
             await navigator.share({
-                title: `Visita ${place.nombre} en Almería`,
-                text: `¡Mira este lugar en Almería! ${place.nombre}: ${place.descripcion}`,
+                title: place.nombre,
+                text: place.descripcion,
                 url: window.location.href
             });
         } catch (err) {
-            console.error('Error sharing:', err);
+            console.log('Error sharing:', err);
         }
     } else {
-        alert('La función de compartir no está disponible en este navegador. Copia el enlace manualmente.');
+        alert('Copiado al portapapeles: ' + window.location.href);
     }
 }
 
-// Event Listeners
-searchInput.addEventListener('input', (e) => {
-    searchQuery = e.target.value;
-    renderCurrentView();
-});
+function registerSW() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+}
 
-categoryFilters.forEach(filter => {
-    filter.addEventListener('click', () => {
-        categoryFilters.forEach(f => f.classList.remove('active'));
-        filter.classList.add('active');
-        currentCategory = filter.dataset.category;
-        renderCurrentView();
-    });
-});
-
-navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        navItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        currentView = item.dataset.view;
-        
-        // Show/hide search and filters based on view
-        const headerFilters = document.querySelector('.filters-container');
-        if (currentView === 'clima') {
-            headerFilters.classList.add('hidden');
-        } else {
-            headerFilters.classList.remove('hidden');
-        }
-        
-        renderCurrentView();
-    });
-});
-
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
-window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.style.display = 'none';
-});
-
-window.resetFilters = () => {
-    searchQuery = '';
-    currentCategory = 'todos';
-    searchInput.value = '';
-    categoryFilters.forEach(f => {
-        f.classList.remove('active');
-        if (f.dataset.category === 'todos') f.classList.add('active');
-    });
-    renderCurrentView();
+// Global App Object for HTML event handlers
+window.App = {
+    init,
+    setView,
+    showDetails,
+    closeModal,
+    sharePlace
 };
 
-// Init
-loadPlaces();
-
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('SW registered'))
-            .catch(err => console.log('SW error', err));
-    });
-}
+init();

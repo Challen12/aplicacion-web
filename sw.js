@@ -1,4 +1,4 @@
-const CACHE_NAME = 'almeria-turismo-v4';
+const CACHE_NAME = 'almeria-turismo-v5';
 const ASSETS = [
     'index.html',
     'style.css',

@@ -1,35 +1,56 @@
-export function initMap() {
-    // Coordenadas de Almería centro
-    const map = L.map('map').setView([36.834, -2.463], 14);
+let map;
+let markers = [];
+
+function initMap(places) {
+    if (map) {
+        map.remove();
+    }
+
+    // Initialize map centered in Almería
+    map = L.map('map-view').setView([36.8381, -2.4597], 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    return map;
-}
+    // Custom Icon
+    const customIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `
+            <div class="bg-primary p-2 rounded-full shadow-lg text-white flex items-center justify-center border-2 border-white scale-90 hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">location_on</span>
+            </div>
+        `,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30]
+    });
 
-export function renderMapMarkers(map, data, onMarkerClick) {
-    data.forEach(place => {
-        const marker = L.marker([place.lat, place.lng]).addTo(map);
+    markers = [];
+    places.forEach(place => {
+        const marker = L.marker([place.lat, place.lng], { icon: customIcon }).addTo(map);
         
+        // Custom Popup
         const popupContent = `
-            <div style="font-family: 'Outfit', sans-serif;">
-                <h4 style="margin-bottom: 5px;">${place.nombre}</h4>
-                <p style="font-size: 12px; margin-bottom: 10px;">${place.tipo}</p>
-                <button class="popup-btn" style="background: #2563eb; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 11px;">Ver Detalles</button>
+            <div class="w-48 bg-white rounded-xl overflow-hidden shadow-xl border border-outline-variant/30 font-body">
+                <img src="${place.imagen}" class="w-full h-24 object-cover" alt="${place.nombre}">
+                <div class="p-3">
+                    <h3 class="font-display font-bold text-primary text-sm leading-tight">${place.nombre}</h3>
+                    <div class="flex items-center gap-1 text-secondary mt-1">
+                        <span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="text-[10px] font-bold">${place.puntuacion}</span>
+                    </div>
+                    <button onclick="App.showDetails(${place.id})" class="mt-2 w-full bg-primary text-white text-[10px] py-1.5 rounded-lg font-bold">Ver ficha</button>
+                </div>
             </div>
         `;
-        
-        marker.bindPopup(popupContent);
-        
-        marker.on('popupopen', () => {
-            const btn = document.querySelector('.popup-btn');
-            if (btn) {
-                btn.addEventListener('click', () => {
-                    onMarkerClick(place);
-                });
-            }
+
+        marker.bindPopup(popupContent, {
+            closeButton: false,
+            className: 'custom-leaflet-popup'
         });
+        
+        markers.push(marker);
     });
 }
+
+window.initMap = initMap;
