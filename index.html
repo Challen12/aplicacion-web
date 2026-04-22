@@ -56,28 +56,57 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 9999; /* Super top */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .modal-content {
             position: relative;
-            background-color: #fefefe;
-            margin: 5% auto;
-            width: 90%;
+            background-color: #ffffff;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
             max-width: 800px;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            animation: modalFadeIn 0.3s ease-out;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: modalSlideUp 0.3s ease-out;
         }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @media (min-width: 768px) {
+            .modal-content {
+                margin: 2% auto;
+                height: 90vh;
+                border-radius: 32px;
+            }
+        }
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(100%); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .close-modal-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: rgba(255, 255, 255, 0.9);
+            color: #003358;
+            padding: 12px;
+            border-radius: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .close-modal-btn:hover {
+            transform: scale(1.1);
+            background: white;
         }
     </style>
 </head>

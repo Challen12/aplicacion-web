@@ -1,6 +1,10 @@
 /* Custom styles to complement Tailwind */
 
 /* Leaflet Popup Styling */
+.custom-leaflet-popup {
+    z-index: 500 !important; /* Below header/footer but above map */
+}
+
 .custom-leaflet-popup .leaflet-popup-content-wrapper {
     background: transparent;
     padding: 0;
@@ -53,6 +57,15 @@ html, body {
 /* Safe areas for mobile */
 .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+    padding-top: env(safe-area-inset-top);
+}
+
+/* Ensure modal body handles padding */
+#modal-body {
+    padding-bottom: 100px; /* Space for buttons */
 }
 
 /* Map specific tweaks */

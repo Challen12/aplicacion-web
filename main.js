@@ -256,16 +256,19 @@ function showDetails(id) {
     const place = state.places.find(p => p.id === id);
     const modalBody = document.getElementById('modal-body');
     
+    // Lock scroll
+    document.body.style.overflow = 'hidden';
+    
     modalBody.innerHTML = `
-        <div class="relative h-[300px]">
+        <button onclick="App.closeModal()" class="close-modal-btn">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="relative h-[300px] md:h-[400px]">
             <img src="${place.imagen}" class="w-full h-full object-cover" alt="${place.nombre}">
-            <button onclick="App.closeModal()" class="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white hover:text-primary transition-all">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div class="absolute bottom-6 left-6 right-6">
                 <span class="bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-2 inline-block">${place.tipo}</span>
-                <h2 class="text-3xl font-display font-bold text-white">${place.nombre}</h2>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-white">${place.nombre}</h2>
                 <div class="flex items-center gap-1 text-secondary-container mt-2">
                     ${renderStars(place.puntuacion)}
                     <span class="text-sm ml-1 text-white">${place.puntuacion} • Puntuación de Google</span>
@@ -334,6 +337,7 @@ function showDetails(id) {
 
 function closeModal() {
     modal.style.display = 'none';
+    document.body.style.overflow = '';
 }
 
 async function sharePlace(id) {
