@@ -36,27 +36,40 @@ async function init() {
 }
 
 function setupEventListeners() {
-    // Search
+    // Search (Home)
     searchInput.addEventListener('input', (e) => {
         state.filters.text = e.target.value.toLowerCase();
+        const mapSearch = document.getElementById('map-search-input');
+        if (mapSearch) mapSearch.value = e.target.value;
         filterPlaces();
     });
 
-    // Categories
+    // Search (Map)
+    const mapSearch = document.getElementById('map-search-input');
+    if (mapSearch) {
+        mapSearch.addEventListener('input', (e) => {
+            state.filters.text = e.target.value.toLowerCase();
+            searchInput.value = e.target.value;
+            filterPlaces();
+        });
+    }
+
+    // Categories (Home)
     categoryFilters.addEventListener('click', (e) => {
         const btn = e.target.closest('.category-btn');
         if (!btn) return;
-
-        document.querySelectorAll('.category-btn').forEach(b => {
-            b.classList.remove('bg-primary', 'text-white');
-            b.classList.add('bg-white', 'text-on-surface');
-        });
-        btn.classList.remove('bg-white', 'text-on-surface');
-        btn.classList.add('bg-primary', 'text-white');
-
-        state.filters.category = btn.dataset.category;
-        filterPlaces();
+        handleCategoryChange(btn.dataset.category);
     });
+
+    // Categories (Map)
+    const mapCategoryBtn = document.querySelector('.map-category-btn');
+    if (mapCategoryBtn && mapCategoryBtn.parentElement) {
+        mapCategoryBtn.parentElement.addEventListener('click', (e) => {
+            const btn = e.target.closest('.map-category-btn');
+            if (!btn) return;
+            handleCategoryChange(btn.dataset.category);
+        });
+    }
 
     // Close modal
     window.onclick = (event) => {
@@ -64,6 +77,12 @@ function setupEventListeners() {
             closeModal();
         }
     };
+}
+
+function handleCategoryChange(category) {
+    updateCategoryUI(category);
+    state.filters.category = category;
+    filterPlaces();
 }
 
 function filterPlaces() {
@@ -110,6 +129,30 @@ function setView(view) {
     renderCurrentView();
 }
 
+function updateCategoryUI(category) {
+    // Update Home Chips
+    document.querySelectorAll('.category-btn').forEach(b => {
+        if (b.dataset.category === category) {
+            b.classList.add('bg-primary', 'text-white');
+            b.classList.remove('bg-white', 'text-on-surface');
+        } else {
+            b.classList.remove('bg-primary', 'text-white');
+            b.classList.add('bg-white', 'text-on-surface');
+        }
+    });
+
+    // Update Map Chips
+    document.querySelectorAll('.map-category-btn').forEach(b => {
+        if (b.dataset.category === category) {
+            b.classList.add('bg-primary', 'text-white');
+            b.classList.remove('bg-white/90', 'text-primary');
+        } else {
+            b.classList.remove('bg-primary', 'text-white');
+            b.classList.add('bg-white/90', 'text-primary');
+        }
+    });
+}
+
 function renderCurrentView() {
     // Hide all
     [cardsView, listView, mapViewContainer, weatherView].forEach(v => v.classList.add('hidden'));
@@ -123,6 +166,12 @@ function renderCurrentView() {
     } else if (state.currentView === 'map') {
         mapViewContainer.classList.remove('hidden');
         initMap(state.filteredPlaces);
+        // Force Leaflet to update its size calculation
+        setTimeout(() => {
+            if (window.mapInstance) {
+                window.mapInstance.invalidateSize();
+            }
+        }, 100);
     } else if (state.currentView === 'weather') {
         weatherView.classList.remove('hidden');
         renderWeather();

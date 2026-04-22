@@ -1,20 +1,20 @@
-let map;
 let markers = [];
 
 function initMap(places) {
-    if (map) {
-        map.remove();
+    // If map doesn't exist, create it
+    if (!window.mapInstance) {
+        window.mapInstance = L.map('map-view').setView([36.8381, -2.4597], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(window.mapInstance);
     }
 
-    // Initialize map centered in Almería
-    map = L.map('map-view').setView([36.8381, -2.4597], 14);
+    // Clear existing markers
+    markers.forEach(marker => window.mapInstance.removeLayer(marker));
+    markers = [];
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Custom Icon
-    const customIcon = L.divIcon({
+    // Custom Icon template
+    const createCustomIcon = () => L.divIcon({
         className: 'custom-div-icon',
         html: `
             <div class="bg-primary p-2 rounded-full shadow-lg text-white flex items-center justify-center border-2 border-white scale-90 hover:scale-110 transition-transform">
@@ -25,11 +25,9 @@ function initMap(places) {
         iconAnchor: [15, 30]
     });
 
-    markers = [];
     places.forEach(place => {
-        const marker = L.marker([place.lat, place.lng], { icon: customIcon }).addTo(map);
+        const marker = L.marker([place.lat, place.lng], { icon: createCustomIcon() }).addTo(window.mapInstance);
         
-        // Custom Popup
         const popupContent = `
             <div class="w-48 bg-white rounded-xl overflow-hidden shadow-xl border border-outline-variant/30 font-body">
                 <img src="${place.imagen}" class="w-full h-24 object-cover" alt="${place.nombre}">
@@ -51,6 +49,12 @@ function initMap(places) {
         
         markers.push(marker);
     });
+
+    // Optionally fit bounds if there are markers
+    if (markers.length > 0) {
+        const group = new L.featureGroup(markers);
+        window.mapInstance.fitBounds(group.getBounds().pad(0.1), { maxZoom: 16 });
+    }
 }
 
 window.initMap = initMap;

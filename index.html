@@ -139,7 +139,41 @@
             <!-- List items will be rendered here -->
         </div>
 
-        <div id="map-view-container" class="view-container mt-8 px-5 hidden">
+        <div id="map-view-container" class="view-container mt-8 px-5 hidden relative">
+            <!-- Floating Category Filters -->
+            <div class="absolute top-6 left-1/2 -translate-x-1/2 z-[1001] flex gap-2 overflow-x-auto max-w-[90vw] pb-2 hide-scrollbar px-4">
+                <button class="map-category-btn flex-none px-5 py-2 bg-primary text-white rounded-full text-xs font-bold shadow-lg whitespace-nowrap active" data-category="todos">
+                    <span class="material-symbols-outlined text-[18px] align-middle mr-1">grid_view</span> Todo
+                </button>
+                <button class="map-category-btn flex-none px-5 py-2 bg-white/90 backdrop-blur-md text-primary rounded-full text-xs font-bold shadow-lg whitespace-nowrap hover:bg-white transition-colors" data-category="cultura">
+                    <span class="material-symbols-outlined text-[18px] align-middle mr-1">theater_comedy</span> Cultura
+                </button>
+                <button class="map-category-btn flex-none px-5 py-2 bg-white/90 backdrop-blur-md text-primary rounded-full text-xs font-bold shadow-lg whitespace-nowrap hover:bg-white transition-colors" data-category="museos">
+                    <span class="material-symbols-outlined text-[18px] align-middle mr-1">museum</span> Museos
+                </button>
+                <button class="map-category-btn flex-none px-5 py-2 bg-white/90 backdrop-blur-md text-primary rounded-full text-xs font-bold shadow-lg whitespace-nowrap hover:bg-white transition-colors" data-category="restaurantes">
+                    <span class="material-symbols-outlined text-[18px] align-middle mr-1">restaurant</span> Restaurantes
+                </button>
+                <button class="map-category-btn flex-none px-5 py-2 bg-white/90 backdrop-blur-md text-primary rounded-full text-xs font-bold shadow-lg whitespace-nowrap hover:bg-white transition-colors" data-category="monumentos históricos">
+                    <span class="material-symbols-outlined text-[18px] align-middle mr-1">castle</span> Monumentos
+                </button>
+                <button class="map-category-btn flex-none px-5 py-2 bg-white/90 backdrop-blur-md text-primary rounded-full text-xs font-bold shadow-lg whitespace-nowrap hover:bg-white transition-colors" data-category="recintos deportivos">
+                    <span class="material-symbols-outlined text-[18px] align-middle mr-1">sports_soccer</span> Deportes
+                </button>
+            </div>
+
+            <!-- Floating Search Bar -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-[1001] w-full max-w-[400px] px-5">
+                <div class="bg-white/90 backdrop-blur-xl p-2 rounded-2xl shadow-2xl border border-white/40 flex items-center">
+                    <span class="material-symbols-outlined text-outline ml-3">search</span>
+                    <input type="text" id="map-search-input" placeholder="Buscar lugares en Almería..." 
+                        class="bg-transparent border-none focus:ring-0 w-full text-sm px-3 py-2 text-primary placeholder:text-outline/60">
+                    <button class="bg-surface-container-high p-2 rounded-xl text-primary">
+                        <span class="material-symbols-outlined">tune</span>
+                    </button>
+                </div>
+            </div>
+
             <div id="map-view" class="shadow-xl border border-white"></div>
         </div>
 
