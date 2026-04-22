@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#ffd6a3",
+                        "primary-fixed": "#d0e4ff",
+                        "surface-bright": "#f4fafd",
+                        "tertiary-fixed-dim": "#c8c6c2",
+                        "on-primary-fixed": "#001d35",
+                        "primary-fixed-dim": "#9ccaff",
+                        "primary": "#003358",
+                        "surface-container-highest": "#dde4e6",
+                        "primary-container": "#004a7c",
+                        "outline-variant": "#c1c7d0",
+                        "outline": "#727780",
+                        "tertiary": "#31312e",
+                        "secondary-fixed": "#ffddb4",
+                        "secondary-fixed-dim": "#e7c08e",
+                        "on-surface": "#161d1f",
+                        "on-primary-fixed-variant": "#00497b",
+                        "surface-tint": "#296195",
+                        "on-secondary-fixed": "#291800",
+                        "inverse-surface": "#2b3234",
+                        "surface-container-low": "#eef5f7",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e2e9ec",
+                        "on-tertiary-fixed": "#1c1c1a",
+                        "on-surface-variant": "#42474f",
+                        "secondary": "#775930",
+                        "inverse-primary": "#9ccaff",
+                        "inverse-on-surface": "#ebf2f4",
+                        "surface-container": "#e8eff1",
+                        "on-background": "#161d1f",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#474744",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#795b32",
+                        "tertiary-fixed": "#e5e2de",
+                        "background": "#f4fafd",
+                        "surface-dim": "#d4dbdd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#484745",
+                        "surface-variant": "#dde4e6",
+                        "on-tertiary-container": "#b7b5b2",
+                        "on-secondary-fixed-variant": "#5c421b",
+                        "on-primary-container": "#87baf3",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface": "#f4fafd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "48px",
+                        "unit": "8px",
+                        "margin-desktop": "40px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(0, 51, 88, 0) 0%, rgba(0, 51, 88, 0.7) 100%);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background font-body-md text-on-surface selection:bg-secondary-container">
+    <!-- TopAppBar from JSON -->
+    <header
+        class="bg-[#fdfcfb] dark:bg-slate-950 border-b border-[#EAE2D5] dark:border-slate-800 shadow-sm dark:shadow-none docked full-width top-0 sticky z-40">
+        <div class="flex items-center justify-between px-5 h-16 w-full max-w-[1200px] mx-auto">
+            <div class="flex items-center gap-4">
+                <button
+                    class="text-[#004A7C] dark:text-sky-400 active:opacity-80 transition-opacity p-2 rounded-full hover:bg-[#F5F1EA] dark:hover:bg-slate-900 transition-colors duration-200">
+                    <span class="material-symbols-outlined" data-icon="menu">menu</span>
+                </button>
+                <h1
+                    class="font-['Plus_Jakarta_Sans'] antialiased tracking-tight text-2xl font-bold text-[#004A7C] dark:text-sky-100">
+                    Almería</h1>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <nav class="flex gap-6">
+                    <a class="text-[#004A7C] dark:text-sky-300 font-bold border-b-2 border-[#004A7C] font-label-md text-label-md py-1"
+                        href="#">Explore</a>
+                    <a class="text-slate-500 dark:text-slate-400 font-label-md text-label-md py-1 hover:text-[#004A7C] transition-colors"
+                        href="#">List</a>
+                    <a class="text-slate-500 dark:text-slate-400 font-label-md text-label-md py-1 hover:text-[#004A7C] transition-colors"
+                        href="#">Map</a>
+                    <a class="text-slate-500 dark:text-slate-400 font-label-md text-label-md py-1 hover:text-[#004A7C] transition-colors"
+                        href="#">Weather</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+                    <img alt="User Profile" class="w-full h-full object-cover"
+                        data-alt="Close-up portrait of a friendly professional man with short hair and a clean-shaven face against a soft blue studio background"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAsE0_hl5QIU8mMThrNF-NeUr_tHVWctPhRfdeWSG5-kfJyjDuXordQhGAVvZuyQphDWSNOSWahmsKTlYya2YPx291AcmowA56obcvASKO1WaKC5ZMvtqqQSK4oK8z9iH__3Fj3Rfy5S5J6ecvnKCKcXxVmCY6sBlCFE-FqvaTYqaPZRzIbWnVBd7nKA3U-_cmDX6PhXvx-oTCsvK1SK6tw3ahelPHYeXOABnCRX5ewvMdNHcLjaGrrOp6w1BPuKUcWYoDoqqm-Xk" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-[1200px] mx-auto pb-32">
+        <!-- Filters / Chips -->
+        <section class="mt-8 px-5 md:px-margin-desktop">
+            <div class="flex overflow-x-auto gap-3 hide-scrollbar pb-2">
+                <button
+                    class="flex-none px-6 py-2 bg-primary text-on-primary rounded-full font-label-md text-label-md">Todo</button>
+                <button
+                    class="flex-none px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md hover:bg-opacity-80 transition-all">cultura</button>
+                <button
+                    class="flex-none px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md hover:bg-opacity-80 transition-all">museos</button>
+                <button
+                    class="flex-none px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md hover:bg-opacity-80 transition-all">restaurantes</button>
+                <button
+                    class="flex-none px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md hover:bg-opacity-80 transition-all">monumentos
+                    históricos</button>
+                <button
+                    class="flex-none px-6 py-2 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md hover:bg-opacity-80 transition-all">recintos
+                    deportivos</button>
+            </div>
+        </section>
+        <!-- Editorial Header -->
+        <section class="mt-margin-desktop px-5 md:px-margin-desktop">
+            <h2 class="font-display-lg text-display-lg text-primary tracking-tighter">Serenidad Mediterránea</h2>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-4">Descubre los tesoros ocultos de
+                la costa volcánica y la historia viva de Almería.</p>
+        </section>
+        <!-- Content Grid (Asymmetric / Bento Style) -->
+        <section class="mt-12 px-5 md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter">
+            <!-- Feature Card (Large) -->
+            <div
+                class="md:col-span-8 group relative h-[500px] overflow-hidden rounded-[16px] shadow-sm hover:shadow-xl transition-all duration-300">
+                <img alt="Alcazaba de Almería"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    data-alt="Panoramic view of Alcazaba of Almeria, an ancient Moorish fortress with stone walls and towers under a clear bright Mediterranean sky at midday"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbIqxFON7qMPoEkyTHQ5ze29zz-CAkVMGLdtBdGLheAzS4djxCET3kYtwZV3dSh0P_P6_iz4ITgPcKwGYIaKDEoxeT6vaMELGS8vIqgb2DeJBtjwwJQE_Xl_u9c4PdbI5TsKkggSJgf3JpWP7ScG4BMx5V5hYMZolPSKdFMyhvQAoeGHUXFNYILAndJHZORIn4Qg_ISJuKzq7hGOXFwsZlKnzWd1OK95ZdkhVxjKzS_lcet3vk-n6aV2RG12Na-ri3MVnvf4gusqo" />
+                <div class="absolute inset-0 hero-gradient"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
+                    <div>
+                        <span
+                            class="bg-secondary text-on-secondary text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Monumento
+                            Histórico</span>
+                        <h3 class="font-headline-lg text-headline-lg text-white">Alcazaba de Almería</h3>
+                        <p class="text-white/80 font-body-md mt-2 max-w-md">La fortaleza árabe más grande de España,
+                            vigilando el mar con mil años de historia.</p>
+                    </div>
+                    <button
+                        class="bg-white/20 backdrop-blur-md text-white p-4 rounded-full hover:bg-white hover:text-primary transition-all active:scale-95">
+                        <span class="material-symbols-outlined" data-icon="share">share</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Small Vertical Card -->
+            <div class="md:col-span-4 group relative h-[500px] overflow-hidden rounded-[16px] shadow-sm">
+                <img alt="Gastronomía Almeriense"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    data-alt="Interior of a luxury modern restaurant in Almeria with minimalist white decor and panoramic views of the sea through large windows"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmK-bQCLTztuxjk0udzbAOYksjOEO-tRsUjQVzOkTs652dpoJqlPcsRzHVPuQiYR1DQSPzx5GkII2VUVBg_-bmeYfNZNwUb591el3kCqh8QHSSw_18i6bUxO2OKr6FuDmYkE-03P0hpKJij935G-C86VDW2QmywCRYSG56bq_uU-BosVEUZMmdLxvPQAOTYWdFyrTZnc7TdCyp9W5tzhjmJxWaxLjLYiyE5snrvrAXZPlkBMOpd8krqlrbUFSq_1OC85EoT1GUU7M" />
+                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
+                <div class="absolute top-6 left-6">
+                    <span
+                        class="bg-primary text-on-primary text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Restaurantes</span>
+                </div>
+                <div class="absolute bottom-0 p-6">
+                    <h3 class="font-headline-md text-headline-md text-white">Sabores del Mar</h3>
+                    <p class="text-white/90 font-body-md mt-2">Cocina de autor con producto local de la lonja.</p>
+                    <button
+                        class="mt-4 flex items-center gap-2 text-white font-label-md text-label-md bg-primary/40 px-4 py-2 rounded-lg hover:bg-primary transition-colors">
+                        <span class="material-symbols-outlined text-[18px]" data-icon="share">share</span> Compartir
+                    </button>
+                </div>
+            </div>
+            <!-- Secondary Grid Row -->
+            <div
+                class="md:col-span-4 group relative h-[350px] overflow-hidden rounded-[16px] bg-surface-container-high shadow-sm">
+                <img alt="Centro de Arte" class="w-full h-48 object-cover"
+                    data-alt="Contemporary art gallery in Almeria with bright white walls and abstract sculptures illuminated by natural sunlight"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMH-fz1DwBXs0kMqplo7hkmQ6Ow7OC_N32oYPktcxO6jiUFQ_01foMUcs3K_WfvSnQiZyGCVU6df6gyd7ekGe25dkI5M2EFd2p5XEa7NhQis7aa-FHHsGV5baSFR9Rjq8LwXraT7a-BhDtrACQ2wlzAOOb8Eag5l5625Xp_le_qaPqVHYeoLHlo3JG_1Gtia8fZas6uz3Y6Uz_ocso9zhZslLd2teWUqUGzHCMKRkchTjUWu6qNTrd3FBYZNMEyOneeb-hD6wDoQ8" />
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span
+                                class="text-secondary font-label-md text-[10px] uppercase tracking-widest">Museos</span>
+                            <h3 class="font-headline-md text-headline-md text-primary mt-1">Museo de Arte</h3>
+                        </div>
+                        <button class="text-outline hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined" data-icon="share">share</span>
+                        </button>
+                    </div>
+                    <p class="text-on-surface-variant font-body-md mt-2 line-clamp-2">Una mirada profunda a la
+                        vanguardia artística del sureste español.</p>
+                </div>
+            </div>
+            <div
+                class="md:col-span-4 group relative h-[350px] overflow-hidden rounded-[16px] bg-surface-container-high shadow-sm">
+                <img alt="Power Horse Stadium" class="w-full h-48 object-cover"
+                    data-alt="Aerial view of a professional stadium in Almeria with blue seats and a perfectly manicured green football pitch"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdxoWCrpwqBe4lXXhtyiDQoCCEqcngHu2BiRPxar7dckTWvGB74t--RzfeY5_zNVMFIbmhPxq19EDGlw2G4bJMFkruJ3B4CM3vRoB8l1yUGdHQPYcmYF9mY4EelTOGgSYl9xoEAQ19YZqksRK-_AmW1JfjKXcB7ghSdFn0PbqFrEYljh7dGKjIfb4T2lZ5i59KXA7XksiHXVOX_RZJsZ194LWS-2REYSEJ9WqwmR0oGqVc9IjgrXiicEfe6adZtSyywrFe3SVaPIM" />
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-secondary font-label-md text-[10px] uppercase tracking-widest">Recintos
+                                Deportivos</span>
+                            <h3 class="font-headline-md text-headline-md text-primary mt-1">Power Horse Stadium</h3>
+                        </div>
+                        <button class="text-outline hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined" data-icon="share">share</span>
+                        </button>
+                    </div>
+                    <p class="text-on-surface-variant font-body-md mt-2 line-clamp-2">El epicentro del fútbol almeriense
+                        y eventos deportivos de élite.</p>
+                </div>
+            </div>
+            <div
+                class="md:col-span-4 group relative h-[350px] overflow-hidden rounded-[16px] bg-surface-container-high shadow-sm">
+                <img alt="Teatro Cervantes" class="w-full h-48 object-cover"
+                    data-alt="Exterior facade of a historic Spanish theater with neoclassical architecture and ornate stone carvings under a dusk sky"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHX_41v0GS_fuUDs4olA2YH7rcHzSVfTVrKd18K2IaRof9by1dyyWhCg1dJ9MSdDe5_fYr1QpelPY7IJA4EIGNMKnXNdCz1Vk96YHL_6vb3S7Inx-TFvxCnyXRvVttOf_cu9s_-98Zhfam-0SXWphBSryiy1gLAzWY1Gmlijh4UhX4kGnX6VhDHmTKA0HE64acUriEwp-4zpAYYVMe_x1qgWXWFE9pLy9onSvs3PlhXbtZIWLLAa33mmmiQiq0XIYDz-HTwdewkq0" />
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span
+                                class="text-secondary font-label-md text-[10px] uppercase tracking-widest">Cultura</span>
+                            <h3 class="font-headline-md text-headline-md text-primary mt-1">Teatro Cervantes</h3>
+                        </div>
+                        <button class="text-outline hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined" data-icon="share">share</span>
+                        </button>
+                    </div>
+                    <p class="text-on-surface-variant font-body-md mt-2 line-clamp-2">Referente cultural con una
+                        programación vibrante durante todo el año.</p>
+                </div>
+            </div>
+        </section>
+        <!-- The Sun Dial (Weather Indicator) -->
+        <section class="mt-section-gap px-5 md:px-margin-desktop">
+            <div
+                class="bg-gradient-to-r from-[#ffd6a3] to-[#d0e4ff] p-8 rounded-[24px] flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h4 class="font-headline-md text-headline-md text-primary">El Momento Perfecto</h4>
+                    <p class="font-body-md text-primary/80 mt-1">Hoy: 24°C • Despejado • Luz dorada a las 19:42</p>
+                </div>
+                <div class="flex gap-4 overflow-x-auto hide-scrollbar w-full md:w-auto">
+                    <div class="flex-none bg-white/40 backdrop-blur-md p-4 rounded-xl text-center min-w-[80px]">
+                        <span class="block text-xs font-bold text-primary/60 uppercase">Mañana</span>
+                        <span class="material-symbols-outlined text-primary mt-1" data-icon="sunny">sunny</span>
+                        <span class="block font-bold text-primary">22°C</span>
+                    </div>
+                    <div class="flex-none bg-white/40 backdrop-blur-md p-4 rounded-xl text-center min-w-[80px]">
+                        <span class="block text-xs font-bold text-primary/60 uppercase">Mediodía</span>
+                        <span class="material-symbols-outlined text-primary mt-1" data-icon="sunny">sunny</span>
+                        <span class="block font-bold text-primary">27°C</span>
+                    </div>
+                    <div class="flex-none bg-white/40 backdrop-blur-md p-4 rounded-xl text-center min-w-[80px]">
+                        <span class="block text-xs font-bold text-primary/60 uppercase">Tarde</span>
+                        <span class="material-symbols-outlined text-primary mt-1"
+                            data-icon="partly_cloudy_day">partly_cloudy_day</span>
+                        <span class="block font-bold text-primary">25°C</span>
+                    </div>
+                    <div class="flex-none bg-white/40 backdrop-blur-md p-4 rounded-xl text-center min-w-[80px]">
+                        <span class="block text-xs font-bold text-primary/60 uppercase">Noche</span>
+                        <span class="material-symbols-outlined text-primary mt-1"
+                            data-icon="clear_night">clear_night</span>
+                        <span class="block font-bold text-primary">19°C</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- BottomNavBar from JSON -->
+    <nav
+        class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#fdfcfb]/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-[#EAE2D5] dark:border-slate-800 shadow-[0_-2px_10px_rgba(0,74,124,0.05)] z-50 md:hidden">
+        <a class="flex flex-col items-center justify-center text-[#004A7C] dark:text-sky-300 scale-105 active:scale-95 transition-all duration-200"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="explore">explore</span>
+            <span
+                class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">Explore</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 opacity-70 hover:text-[#004A7C] active:scale-95 transition-all duration-200"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span>
+            <span
+                class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">List</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 opacity-70 hover:text-[#004A7C] active:scale-95 transition-all duration-200"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="map">map</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">Map</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 opacity-70 hover:text-[#004A7C] active:scale-95 transition-all duration-200"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="sunny">sunny</span>
+            <span
+                class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">Weather</span>
+        </a>
+    </nav>
+    <!-- Contextual FAB for "Plan Your Trip" or "New Entry" - Hidden on sub-pages but active for Explore -->
+    <button
+        class="fixed bottom-24 right-6 bg-primary text-on-primary w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform md:bottom-10 md:right-10 z-40">
+        <span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 0;">add</span>
+    </button>
+</body>
+
+</html>

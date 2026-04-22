@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth
+        }
+
+        .map-texture {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDW67QEJgptnvkwKK-cadvfe7Y0kFM-b186J5NlTC-1T02IQfwuuSpdfOi68H9vrjNeOiUVXRhSTC5U2I7IGLwX1nwb0KF4In9kvP1UTohEVR9qOdprkQgBYq_LVbWr1RAjFuD7XQPvuvo9pvqt8FcEsw0ViRhu2WDtY3ApQbfjFiQoxsKtwF6ky6ulTSOhbs7HpleVqkDQiyIBzC0oXaqp2YtASP7jsDB5oa7vbQ8W5G-al_PQ-ap54oLjMyhdddQVeC_llf6PHjU);
+            background-size: cover;
+            background-position: center
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#ffd6a3",
+                        "primary-fixed": "#d0e4ff",
+                        "surface-bright": "#f4fafd",
+                        "tertiary-fixed-dim": "#c8c6c2",
+                        "on-primary-fixed": "#001d35",
+                        "primary-fixed-dim": "#9ccaff",
+                        "primary": "#003358",
+                        "surface-container-highest": "#dde4e6",
+                        "primary-container": "#004a7c",
+                        "outline-variant": "#c1c7d0",
+                        "outline": "#727780",
+                        "tertiary": "#31312e",
+                        "secondary-fixed": "#ffddb4",
+                        "secondary-fixed-dim": "#e7c08e",
+                        "on-surface": "#161d1f",
+                        "on-primary-fixed-variant": "#00497b",
+                        "surface-tint": "#296195",
+                        "on-secondary-fixed": "#291800",
+                        "inverse-surface": "#2b3234",
+                        "surface-container-low": "#eef5f7",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e2e9ec",
+                        "on-tertiary-fixed": "#1c1c1a",
+                        "on-surface-variant": "#42474f",
+                        "secondary": "#775930",
+                        "inverse-primary": "#9ccaff",
+                        "inverse-on-surface": "#ebf2f4",
+                        "surface-container": "#e8eff1",
+                        "on-background": "#161d1f",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#474744",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#795b32",
+                        "tertiary-fixed": "#e5e2de",
+                        "background": "#f4fafd",
+                        "surface-dim": "#d4dbdd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#484745",
+                        "surface-variant": "#dde4e6",
+                        "on-tertiary-container": "#b7b5b2",
+                        "on-secondary-fixed-variant": "#5c421b",
+                        "on-primary-container": "#87baf3",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface": "#f4fafd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "48px",
+                        "unit": "8px",
+                        "margin-desktop": "40px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md">
+    <!-- Top Navigation Anchor -->
+    <header
+        class="bg-[#fdfcfb] dark:bg-slate-950 font-['Plus_Jakarta_Sans'] antialiased tracking-tight border-b border-[#EAE2D5] dark:border-slate-800 shadow-sm dark:shadow-none docked full-width top-0 sticky z-40">
+        <div class="flex items-center justify-between px-5 h-16 w-full max-w-[1200px] mx-auto">
+            <div class="flex items-center gap-4">
+                <button
+                    class="active:opacity-80 transition-opacity p-2 rounded-full hover:bg-[#F5F1EA] dark:hover:bg-slate-900">
+                    <span class="material-symbols-outlined text-[#004A7C] dark:text-sky-400">menu</span>
+                </button>
+                <h1 class="text-2xl font-bold text-[#004A7C] dark:text-sky-100">Almería</h1>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-[#004A7C] transition-colors"
+                    href="#">Explore</a>
+                <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-[#004A7C] transition-colors"
+                    href="#">List</a>
+                <a class="text-[#004A7C] dark:text-sky-300 font-bold border-b-2 border-[#004A7C]" href="#">Map</a>
+                <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-[#004A7C] transition-colors"
+                    href="#">Weather</a>
+            </div>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container ring-2 ring-surface-container-high overflow-hidden">
+                    <img class="w-full h-full object-cover"
+                        data-alt="Portrait of a male user with a friendly expression in a professional travel guide profile setting"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCZ5yDFI5PlKQCGX8Qf8ut9LopXLSwc_uiSQd6rJyv417phT1eZiIj_Uq2KuHH9PdQ9mHcuqzfu77Kv5ZVqzGT0319E58sUf00RaJhnpWckahKlF5_4ZnLU23ijWEqUm5C6AW-RvN-kBHBrjJdTBcwATxJL7sb7GQU1jHJJz-aprIKoY9QGqesEZ7mYGrjSVkBg9InfH23PjDbr7AD18vFKejUK1wpL7HO5VG9GqVVC6EWON6sYBUTUxNXtLGa3HIZ8XnDJtEQ5rw" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Map Canvas -->
+    <main class="relative h-[calc(100vh-64px)] w-full overflow-hidden bg-surface-container-low">
+        <!-- Interactive Map Background -->
+        <div class="absolute inset-0 z-0 map-texture grayscale-[20%] sepia-[10%] brightness-105"
+            data-location="Almería, Spain" style="">
+            <!-- Simulated Map Overlay (Clean OpenMaps Style) -->
+            <div class="absolute inset-0 bg-blue-100/10 mix-blend-multiply pointer-events-none"></div>
+            <!-- Map Markers -->
+            <!-- Cabo de Gata Marker -->
+            <div class="absolute top-[40%] left-[65%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                <div
+                    class="bg-primary p-3 rounded-full shadow-lg text-white scale-100 group-hover:scale-110 transition-transform flex items-center justify-center">
+                    <span class="material-symbols-outlined"
+                        style="font-variation-settings: 'FILL' 1;">location_on</span>
+                </div>
+                <div
+                    class="absolute top-12 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md whitespace-nowrap text-label-md font-label-md text-primary">
+                    Cabo de Gata
+                </div>
+            </div>
+            <!-- Tabernas Desert Marker -->
+            <div class="absolute top-[30%] left-[45%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                <div
+                    class="bg-primary p-3 rounded-full shadow-lg text-white scale-100 group-hover:scale-110 transition-transform flex items-center justify-center">
+                    <span class="material-symbols-outlined"
+                        style="font-variation-settings: 'FILL' 1;">location_on</span>
+                </div>
+                <div
+                    class="absolute top-12 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md whitespace-nowrap text-label-md font-label-md text-primary">
+                    Desierto de Tabernas
+                </div>
+            </div>
+            <!-- Playa de los Muertos Marker -->
+            <div class="absolute top-[55%] left-[78%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                <div
+                    class="bg-primary p-3 rounded-full shadow-lg text-white scale-100 group-hover:scale-110 transition-transform flex items-center justify-center">
+                    <span class="material-symbols-outlined"
+                        style="font-variation-settings: 'FILL' 1;">location_on</span>
+                </div>
+                <div
+                    class="absolute top-12 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md whitespace-nowrap text-label-md font-label-md text-primary">
+                    Playa de los Muertos
+                </div>
+            </div>
+            <!-- Selected Popup - Alcazaba de Almería -->
+            <div class="absolute top-[48%] left-[42%] -translate-x-1/2 -translate-y-full mb-4 z-10">
+                <div
+                    class="bg-surface-container-lowest rounded-xl shadow-xl w-64 overflow-hidden border border-outline-variant/30 animate-in fade-in zoom-in duration-300">
+                    <div class="relative h-32 w-full">
+                        <img class="w-full h-full object-cover"
+                            data-alt="Stunning ancient Moorish fortress Alcazaba of Almeria with limestone walls under a clear bright Mediterranean sky"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe_rh4HFlGlTdEnoo4IgHozz6CaiO89IjXkXSKqb7tiZk08Sy2ajzOreG7BAYNuBHatdApK2MHtyKp_fLSDd7oEVC-MGul9HFWi0PJ6tynDl4nU3hudeejF35MZ7wm9Hg62f35IJhiw0DdfExcXMlVzq3TpH7kDWTQcAQ0eXP02iYwwJAAPKKmgeJv_UQDpg3QCf7wLAMQp3ka7L2Q8Hdu2vulPjXFzo5YkRLj0ilMrQYlbiJiwNdLu2UM7HeuuATnmSWVujkuaFM" />
+                        <button
+                            class="absolute top-2 right-2 bg-black/20 backdrop-blur-md text-white rounded-full p-1 hover:bg-black/40">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <h3 class="font-headline-md text-headline-md text-primary">Alcazaba de Almería</h3>
+                            <p class="text-label-md font-label-md text-outline">Conjunto Monumental</p>
+                        </div>
+                        <a class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 rounded-lg text-label-md font-label-md hover:opacity-90 active:scale-[0.98] transition-all"
+                            href="https://maps.google.com" target="_blank">
+                            <span class="material-symbols-outlined text-[18px]">directions</span>
+                            Ver ruta en Google Maps
+                        </a>
+                    </div>
+                    <div
+                        class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-surface-container-lowest rotate-45 border-r border-b border-outline-variant/30">
+                    </div>
+                </div>
+                <div
+                    class="bg-secondary-container p-3 rounded-full shadow-lg text-secondary-fixed-dim scale-110 flex items-center justify-center mx-auto mt-2 ring-4 ring-white/30">
+                    <span class="material-symbols-outlined text-primary"
+                        style="font-variation-settings: 'FILL' 1;">location_on</span>
+                </div>
+            </div>
+        </div>
+        <!-- Floating UI Controls -->
+        <div class="absolute top-6 left-6 z-20 space-y-3">
+            <div class="bg-white/90 backdrop-blur-md p-1 rounded-xl shadow-lg border border-white/20 flex flex-col">
+                <button class="p-3 hover:bg-surface-container-low transition-colors rounded-lg text-primary">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+                <div class="h-[1px] bg-outline-variant/30 mx-2"></div>
+                <button class="p-3 hover:bg-surface-container-low transition-colors rounded-lg text-primary">
+                    <span class="material-symbols-outlined">remove</span>
+                </button>
+            </div>
+            <button
+                class="bg-white/90 backdrop-blur-md p-3 rounded-xl shadow-lg border border-white/20 text-primary hover:bg-white flex items-center justify-center">
+                <span class="material-symbols-outlined">my_location</span>
+            </button>
+        </div>
+        <!-- Category Pills -->
+        <div
+            class="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 overflow-x-auto max-w-[90vw] pb-2 no-scrollbar">
+            <button
+                class="bg-primary text-on-primary px-4 py-2 rounded-full shadow-md text-label-md font-label-md whitespace-nowrap flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">castle</span> Todos
+            </button>
+            <button
+                class="bg-white/90 backdrop-blur-md text-primary px-4 py-2 rounded-full shadow-md text-label-md font-label-md whitespace-nowrap flex items-center gap-2 hover:bg-white transition-colors">
+                <span class="material-symbols-outlined text-[18px]">beach_access</span> Playas
+            </button>
+            <button
+                class="bg-white/90 backdrop-blur-md text-primary px-4 py-2 rounded-full shadow-md text-label-md font-label-md whitespace-nowrap flex items-center gap-2 hover:bg-white transition-colors">
+                <span class="material-symbols-outlined text-[18px]">restaurant</span> Gastronomía
+            </button>
+            <button
+                class="bg-white/90 backdrop-blur-md text-primary px-4 py-2 rounded-full shadow-md text-label-md font-label-md whitespace-nowrap flex items-center gap-2 hover:bg-white transition-colors">
+                <span class="material-symbols-outlined text-[18px]">museum</span> Cultura
+            </button>
+        </div>
+        <!-- Search Bar Overlay -->
+        <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 w-full max-w-[400px] px-5">
+            <div
+                class="bg-white/90 backdrop-blur-xl p-2 rounded-2xl shadow-2xl border border-white/40 flex items-center">
+                <span class="material-symbols-outlined text-outline ml-3">search</span>
+                <input
+                    class="bg-transparent border-none focus:ring-0 w-full text-body-md px-3 py-2 text-primary placeholder:text-outline/60"
+                    placeholder="Buscar lugares en Almería..." type="text" />
+                <button class="bg-surface-container-high p-2 rounded-xl text-primary">
+                    <span class="material-symbols-outlined">tune</span>
+                </button>
+            </div>
+        </div>
+    </main>
+    <!-- Bottom Navigation Shell -->
+    <nav
+        class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#fdfcfb]/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-[#EAE2D5] dark:border-slate-800 shadow-[0_-2px_10px_rgba(0,74,124,0.05)] z-50 md:hidden">
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 opacity-70 hover:text-[#004A7C] transition-all duration-200 active:scale-95"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="explore">explore</span>
+            <span
+                class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">Explore</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 opacity-70 hover:text-[#004A7C] transition-all duration-200 active:scale-95"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span>
+            <span
+                class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">List</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-[#004A7C] dark:text-sky-300 scale-105 transition-all duration-200 active:scale-95"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="map"
+                style="font-variation-settings: 'FILL' 1;">map</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">Map</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 opacity-70 hover:text-[#004A7C] transition-all duration-200 active:scale-95"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="sunny">sunny</span>
+            <span
+                class="font-['Plus_Jakarta_Sans'] text-[10px] font-semibold uppercase tracking-widest mt-1">Weather</span>
+        </a>
+    </nav>
+</body>
+
+</html>

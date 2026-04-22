@@ -1,0 +1,452 @@
+[
+  {
+    "id": 1,
+    "nombre": "Alcazaba de Almería",
+    "tipo": "monumentos históricos",
+    "descripcion": "Fortaleza musulmana del siglo X, la mayor de su tipo construida por árabes en España.",
+    "lat": 36.8398,
+    "lng": -2.4705,
+    "imagen": "https://picsum.photos/seed/alcazaba/800/600"
+  },
+  {
+    "id": 2,
+    "nombre": "Catedral de la Encarnación",
+    "tipo": "monumentos históricos",
+    "descripcion": "Templo de estilo gótico y renacentista que combina funciones de fortaleza defensiva.",
+    "lat": 36.8375,
+    "lng": -2.4686,
+    "imagen": "https://picsum.photos/seed/catedral/800/600"
+  },
+  {
+    "id": 3,
+    "nombre": "Cable Inglés",
+    "tipo": "monumentos históricos",
+    "descripcion": "Antiguo cargadero de mineral de hierro construido en 1904, símbolo de la arquitectura del hierro.",
+    "lat": 36.8322,
+    "lng": -2.4658,
+    "imagen": "https://picsum.photos/seed/cable/800/600"
+  },
+  {
+    "id": 4,
+    "nombre": "Murallas de Jayrán",
+    "tipo": "monumentos históricos",
+    "descripcion": "Restos de las murallas que rodeaban la ciudad en el siglo XI, situadas en el Cerro de San Cristóbal.",
+    "lat": 36.8444,
+    "lng": -2.4681,
+    "imagen": "https://picsum.photos/seed/jayran/800/600"
+  },
+  {
+    "id": 5,
+    "nombre": "Aljibes Árabes de Jairán",
+    "tipo": "monumentos históricos",
+    "descripcion": "Antiguos depósitos de agua construidos en el siglo XI para abastecer a la ciudad.",
+    "lat": 36.8386,
+    "lng": -2.4667,
+    "imagen": "https://picsum.photos/seed/aljibes/800/600"
+  },
+  {
+    "id": 6,
+    "nombre": "Iglesia de Santiago",
+    "tipo": "monumentos históricos",
+    "descripcion": "Iglesia renacentista con una impresionante portada plateresca, una de las más bellas de la ciudad.",
+    "lat": 36.8375,
+    "lng": -2.4639,
+    "imagen": "https://picsum.photos/seed/santiago/800/600"
+  },
+  {
+    "id": 7,
+    "nombre": "Iglesia de San Juan Evangelista",
+    "tipo": "monumentos históricos",
+    "descripcion": "Asentada sobre la antigua Mezquita Mayor de Almería, conserva el muro del quibla y el mihrab.",
+    "lat": 36.8383,
+    "lng": -2.4708,
+    "imagen": "https://picsum.photos/seed/sanjuan/800/600"
+  },
+  {
+    "id": 8,
+    "nombre": "Plaza de la Constitución (Plaza Vieja)",
+    "tipo": "monumentos históricos",
+    "descripcion": "Plaza histórica porticada, sede del Ayuntamiento y corazón del casco antiguo.",
+    "lat": 36.8389,
+    "lng": -2.4667,
+    "imagen": "https://picsum.photos/seed/plazavieja/800/600"
+  },
+  {
+    "id": 9,
+    "nombre": "Casa de las Mariposas",
+    "tipo": "monumentos históricos",
+    "descripcion": "Edificio modernista emblemático situado en la Puerta de Purchena.",
+    "lat": 36.8394,
+    "lng": -2.4625,
+    "imagen": "https://picsum.photos/seed/mariposas/800/600"
+  },
+  {
+    "id": 10,
+    "nombre": "Torre de los Perdigones",
+    "tipo": "monumentos históricos",
+    "descripcion": "Antigua torre de fundición de plomo que forma parte del patrimonio industrial de la ciudad.",
+    "lat": 36.8347,
+    "lng": -2.4553,
+    "imagen": "https://picsum.photos/seed/perdigones/800/600"
+  },
+  {
+    "id": 11,
+    "nombre": "Museo de Almería",
+    "tipo": "museos",
+    "descripcion": "Principal museo arqueológico con colecciones desde la prehistoria hasta el periodo islámico.",
+    "lat": 36.8383,
+    "lng": -2.4564,
+    "imagen": "https://picsum.photos/seed/museo1/800/600"
+  },
+  {
+    "id": 12,
+    "nombre": "Museo de la Guitarra",
+    "tipo": "museos",
+    "descripcion": "Dedicado al luthier Antonio de Torres, padre de la guitarra clásica moderna.",
+    "lat": 36.8372,
+    "lng": -2.4681,
+    "imagen": "https://picsum.photos/seed/guitarra/800/600"
+  },
+  {
+    "id": 13,
+    "nombre": "Centro de Arte CAMA",
+    "tipo": "museos",
+    "descripcion": "Centro de exposiciones de arte moderno y contemporáneo en un edificio histórico.",
+    "lat": 36.8361,
+    "lng": -2.4589,
+    "imagen": "https://picsum.photos/seed/cama/800/600"
+  },
+  {
+    "id": 14,
+    "nombre": "Museo Doña Pakyta",
+    "tipo": "museos",
+    "descripcion": "Pinacoteca con obras de artistas almerienses de los siglos XIX y XX.",
+    "lat": 36.8342,
+    "lng": -2.4611,
+    "imagen": "https://picsum.photos/seed/pakyta/800/600"
+  },
+  {
+    "id": 15,
+    "nombre": "Casa del Cine",
+    "tipo": "museos",
+    "descripcion": "Museo sobre la historia del cine en Almería, ubicado en el antiguo Cortijo Romero.",
+    "lat": 36.8525,
+    "lng": -2.4411,
+    "imagen": "https://picsum.photos/seed/cine/800/600"
+  },
+  {
+    "id": 16,
+    "nombre": "Centro Andaluz de la Fotografía",
+    "tipo": "museos",
+    "descripcion": "Primer centro público en España dedicado exclusivamente a la fotografía.",
+    "lat": 36.8375,
+    "lng": -2.4653,
+    "imagen": "https://picsum.photos/seed/caf/800/600"
+  },
+  {
+    "id": 17,
+    "nombre": "Espacio 2",
+    "tipo": "museos",
+    "descripcion": "Sede del Museo de Arte que alberga exposiciones temporales y permanentes.",
+    "lat": 36.8367,
+    "lng": -2.4631,
+    "imagen": "https://picsum.photos/seed/espacio2/800/600"
+  },
+  {
+    "id": 18,
+    "nombre": "CIP (Centro de Interpretación Patrimonial)",
+    "tipo": "museos",
+    "descripcion": "Espacio interactivo sobre la historia de Almería a través de los siglos.",
+    "lat": 36.8389,
+    "lng": -2.4667,
+    "imagen": "https://picsum.photos/seed/cip/800/600"
+  },
+  {
+    "id": 19,
+    "nombre": "Museo del Realismo (MuReC)",
+    "tipo": "museos",
+    "descripcion": "Ubicado en el antiguo Hospital Provincial, dedicado al realismo español contemporáneo.",
+    "lat": 36.8372,
+    "lng": -2.4642,
+    "imagen": "https://picsum.photos/seed/murec/800/600"
+  },
+  {
+    "id": 20,
+    "nombre": "Casa del Poeta José Ángel Valente",
+    "tipo": "museos",
+    "descripcion": "Casa donde vivió el poeta, ahora convertida en centro cultural.",
+    "lat": 36.8369,
+    "lng": -2.4686,
+    "imagen": "https://picsum.photos/seed/valente/800/600"
+  },
+  {
+    "id": 21,
+    "nombre": "Casa Puga",
+    "tipo": "restaurantes",
+    "descripcion": "Lugar legendario fundado en 1870, famoso por sus tapas tradicionales.",
+    "lat": 36.8402,
+    "lng": -2.4638,
+    "imagen": "https://picsum.photos/seed/casapuga1/800/600"
+  },
+  {
+    "id": 22,
+    "nombre": "El Quinto Toro",
+    "tipo": "restaurantes",
+    "descripcion": "Bar castizo con solera, conocido por sus tapas de cuchara y ambiente taurino.",
+    "lat": 36.8391,
+    "lng": -2.4619,
+    "imagen": "https://picsum.photos/seed/quintotoro1/800/600"
+  },
+  {
+    "id": 23,
+    "nombre": "Bodega Aranda",
+    "tipo": "restaurantes",
+    "descripcion": "Tradicional bodega en el centro histórico, ideal para tapear con amigos.",
+    "lat": 36.8386,
+    "lng": -2.4633,
+    "imagen": "https://picsum.photos/seed/aranda/800/600"
+  },
+  {
+    "id": 24,
+    "nombre": "Bar Entre Mares",
+    "tipo": "restaurantes",
+    "descripcion": "Especialista en pescados y mariscos frescos de la costa almeriense.",
+    "lat": 36.8311,
+    "lng": -2.4608,
+    "imagen": "https://picsum.photos/seed/entremares/800/600"
+  },
+  {
+    "id": 25,
+    "nombre": "La Tahona",
+    "tipo": "restaurantes",
+    "descripcion": "Gastroteca moderna con una amplia selección de tapas creativas.",
+    "lat": 36.8381,
+    "lng": -2.4622,
+    "imagen": "https://picsum.photos/seed/tahona/800/600"
+  },
+  {
+    "id": 26,
+    "nombre": "Taberna Nuestra Tierra",
+    "tipo": "restaurantes",
+    "descripcion": "Cocina de autor basada en productos de la tierra con un toque vanguardista.",
+    "lat": 36.8367,
+    "lng": -2.4614,
+    "imagen": "https://picsum.photos/seed/nuestratierra/800/600"
+  },
+  {
+    "id": 27,
+    "nombre": "Tony García Espacio Gastronómico",
+    "tipo": "restaurantes",
+    "descripcion": "Referente de la cocina de mercado y vanguardia en Almería.",
+    "lat": 36.8411,
+    "lng": -2.4511,
+    "imagen": "https://picsum.photos/seed/tonygarcia/800/600"
+  },
+  {
+    "id": 28,
+    "nombre": "Restaurante Casa Joaquín",
+    "tipo": "restaurantes",
+    "descripcion": "Cocina tradicional de calidad con el mejor producto local.",
+    "lat": 36.8322,
+    "lng": -2.4639,
+    "imagen": "https://picsum.photos/seed/casajoaquin/800/600"
+  },
+  {
+    "id": 29,
+    "nombre": "Restaurante Valentín",
+    "tipo": "restaurantes",
+    "descripcion": "Especialista en carnes y pescados a la brasa en el centro de la ciudad.",
+    "lat": 36.8375,
+    "lng": -2.4608,
+    "imagen": "https://picsum.photos/seed/valentin/800/600"
+  },
+  {
+    "id": 30,
+    "nombre": "Restaurante Salmantina",
+    "tipo": "restaurantes",
+    "descripcion": "Famoso por su cocina casera y sus raciones abundantes.",
+    "lat": 36.8317,
+    "lng": -2.4589,
+    "imagen": "https://picsum.photos/seed/salmantina/800/600"
+  },
+  {
+    "id": 31,
+    "nombre": "Refugios de la Guerra Civil",
+    "tipo": "cultura",
+    "descripcion": "Túneles subterráneos para proteger a la población durante la guerra civil.",
+    "lat": 36.8385,
+    "lng": -2.4646,
+    "imagen": "https://picsum.photos/seed/refugios1/800/600"
+  },
+  {
+    "id": 32,
+    "nombre": "Teatro Cervantes",
+    "tipo": "cultura",
+    "descripcion": "Teatro histórico con una variada programación de artes escénicas.",
+    "lat": 36.8367,
+    "lng": -2.4619,
+    "imagen": "https://picsum.photos/seed/cervantes/800/600"
+  },
+  {
+    "id": 33,
+    "nombre": "Auditorio Maestro Padilla",
+    "tipo": "cultura",
+    "descripcion": "Principal recinto para conciertos y grandes espectáculos de la ciudad.",
+    "lat": 36.8247,
+    "lng": -2.4411,
+    "imagen": "https://picsum.photos/seed/maestropadilla/800/600"
+  },
+  {
+    "id": 34,
+    "nombre": "Mercado Central",
+    "tipo": "cultura",
+    "descripcion": "Edificio monumental de hierro donde se vive el día a día de la ciudad.",
+    "lat": 36.8389,
+    "lng": -2.4628,
+    "imagen": "https://picsum.photos/seed/mercado1/800/600"
+  },
+  {
+    "id": 35,
+    "nombre": "Biblioteca Central José María Artero",
+    "tipo": "cultura",
+    "descripcion": "Moderna biblioteca ubicada en un edificio histórico rehabilitado.",
+    "lat": 36.8378,
+    "lng": -2.4603,
+    "imagen": "https://picsum.photos/seed/biblioteca/800/600"
+  },
+  {
+    "id": 36,
+    "nombre": "Escuela de Artes",
+    "tipo": "cultura",
+    "descripcion": "Centro educativo y artístico con un claustro de gran belleza.",
+    "lat": 36.8375,
+    "lng": -2.4631,
+    "imagen": "https://picsum.photos/seed/escuelaartes/800/600"
+  },
+  {
+    "id": 37,
+    "nombre": "Real Casino de Almería",
+    "tipo": "cultura",
+    "descripcion": "Sociedad cultural e histórica con un salón de baile impresionante.",
+    "lat": 36.8372,
+    "lng": -2.4614,
+    "imagen": "https://picsum.photos/seed/casino/800/600"
+  },
+  {
+    "id": 38,
+    "nombre": "Antigua Estación de Ferrocarril",
+    "tipo": "cultura",
+    "descripcion": "Joyas de la arquitectura del hierro y símbolo del progreso industrial.",
+    "lat": 36.8336,
+    "lng": -2.4564,
+    "imagen": "https://picsum.photos/seed/estacion/800/600"
+  },
+  {
+    "id": 39,
+    "nombre": "Kiosko de la Música",
+    "tipo": "cultura",
+    "descripcion": "Situado en el Parque Nicolás Salmerón, sede de conciertos al aire libre.",
+    "lat": 36.8322,
+    "lng": -2.4667,
+    "imagen": "https://picsum.photos/seed/kiosko/800/600"
+  },
+  {
+    "id": 40,
+    "nombre": "Círculo Mercantil",
+    "tipo": "cultura",
+    "descripcion": "Institución cultural situada en el Paseo de Almería.",
+    "lat": 36.8378,
+    "lng": -2.4625,
+    "imagen": "https://picsum.photos/seed/circulo/800/600"
+  },
+  {
+    "id": 41,
+    "nombre": "Estadio de los Juegos Mediterráneos",
+    "tipo": "recintos deportivos",
+    "descripcion": "Sede principal de la UD Almería y eventos de atletismo.",
+    "lat": 36.8405,
+    "lng": -2.4353,
+    "imagen": "https://picsum.photos/seed/estadio1/800/600"
+  },
+  {
+    "id": 42,
+    "nombre": "Palacio de los Juegos Mediterráneos",
+    "tipo": "recintos deportivos",
+    "descripcion": "Instalación polivalente para deportes de sala como balonmano y voleibol.",
+    "lat": 36.8415,
+    "lng": -2.4365,
+    "imagen": "https://picsum.photos/seed/palacio1/800/600"
+  },
+  {
+    "id": 43,
+    "nombre": "Pabellón Rafael Florido",
+    "tipo": "recintos deportivos",
+    "descripcion": "Recinto histórico del deporte almeriense, sede de múltiples disciplinas.",
+    "lat": 36.8367,
+    "lng": -2.4481,
+    "imagen": "https://picsum.photos/seed/rafaelflorido/800/600"
+  },
+  {
+    "id": 44,
+    "nombre": "Complejo Deportivo Las Almadrabillas",
+    "tipo": "recintos deportivos",
+    "descripcion": "Centro acuático con piscinas olímpicas y zonas de fitness.",
+    "lat": 36.8294,
+    "lng": -2.4564,
+    "imagen": "https://picsum.photos/seed/almadrabillas/800/600"
+  },
+  {
+    "id": 45,
+    "nombre": "Campo Municipal Juan Rojas",
+    "tipo": "recintos deportivos",
+    "descripcion": "Antiguo estadio de fútbol, ahora dedicado principalmente al rugby.",
+    "lat": 36.8622,
+    "lng": -2.4389,
+    "imagen": "https://picsum.photos/seed/juanrojas/800/600"
+  },
+  {
+    "id": 46,
+    "nombre": "Pabellón Moisés Ruiz",
+    "tipo": "recintos deportivos",
+    "descripcion": "Sede del club de voleibol Unicaja Almería.",
+    "lat": 36.8394,
+    "lng": -2.4489,
+    "imagen": "https://picsum.photos/seed/moisesruiz/800/600"
+  },
+  {
+    "id": 47,
+    "nombre": "Complejo Deportivo Los Ángeles",
+    "tipo": "recintos deportivos",
+    "descripcion": "Instalaciones de barrio para fútbol y deportes polideportivos.",
+    "lat": 36.8522,
+    "lng": -2.4539,
+    "imagen": "https://picsum.photos/seed/losangeles/800/600"
+  },
+  {
+    "id": 48,
+    "nombre": "Club de Mar Almería",
+    "tipo": "recintos deportivos",
+    "descripcion": "Centro de referencia para vela, piragüismo y deportes náuticos.",
+    "lat": 36.8272,
+    "lng": -2.4589,
+    "imagen": "https://picsum.photos/seed/clubdemar/800/600"
+  },
+  {
+    "id": 49,
+    "nombre": "Golf Alborán",
+    "tipo": "recintos deportivos",
+    "descripcion": "Campo de golf de 18 hoyos situado en la zona de El Toyo.",
+    "lat": 36.8336,
+    "lng": -2.2411,
+    "imagen": "https://picsum.photos/seed/golfalboran/800/600"
+  },
+  {
+    "id": 50,
+    "nombre": "Centro Deportivo Ego",
+    "tipo": "recintos deportivos",
+    "descripcion": "Centro de fitness y bienestar junto a la playa de Almería.",
+    "lat": 36.8297,
+    "lng": -2.4556,
+    "imagen": "https://picsum.photos/seed/egofitness/800/600"
+  }
+]
