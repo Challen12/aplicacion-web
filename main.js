@@ -135,18 +135,67 @@ async function renderWeatherView() {
 function showDetails(place) {
     const modalBody = document.getElementById('modal-body');
     modalBody.innerHTML = `
-        <img src="${place.imagen}" class="modal-hero" alt="${place.nombre}">
+        <div class="modal-header-img">
+            <img src="${place.imagen}" class="modal-hero" alt="${place.nombre}">
+            <div class="modal-overlay-info">
+                <span class="place-tag">${place.tipo}</span>
+                <h2>${place.nombre}</h2>
+            </div>
+        </div>
         <div class="modal-info">
-            <span class="place-tag">${place.tipo}</span>
-            <h2>${place.nombre}</h2>
-            <p style="margin: 15px 0; color: var(--text-muted);">${place.descripcion}</p>
+            <p class="modal-desc">${place.long_descripcion || place.descripcion}</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div class="info-text">
+                        <strong>Dirección</strong>
+                        <p>${place.direccion || 'No disponible'}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">🕒</span>
+                    <div class="info-text">
+                        <strong>Horario</strong>
+                        <p>${place.horario || 'No disponible'}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">📞</span>
+                    <div class="info-text">
+                        <strong>Teléfono</strong>
+                        <p>${place.telefono || 'No disponible'}</p>
+                    </div>
+                </div>
+                ${place.web && place.web !== 'N/A' ? `
+                <div class="info-item">
+                    <span class="info-icon">🌐</span>
+                    <div class="info-text">
+                        <strong>Sitio Web</strong>
+                        <p><a href="${place.web}" target="_blank" style="color: var(--primary); text-decoration: none;">Visitar web oficial</a></p>
+                    </div>
+                </div>
+                ` : ''}
+            </div>
             
             <div class="modal-actions">
                 <a href="https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}" target="_blank" class="btn-primary">
                     <span>🚗</span> Cómo llegar
                 </a>
-                <button class="btn-secondary" id="share-btn">
+                <button class="btn-secondary" id="share-toggle-btn">
                     <span>📤</span> Compartir
+                </button>
+            </div>
+
+            <div id="share-menu" class="share-menu hidden">
+                <button class="share-option whatsapp" onclick="shareTo('whatsapp', ${JSON.stringify(place).replace(/"/g, '&quot;')})">
+                    <span>📱</span> WhatsApp
+                </button>
+                <button class="share-option telegram" onclick="shareTo('telegram', ${JSON.stringify(place).replace(/"/g, '&quot;')})">
+                    <span>✈️</span> Telegram
+                </button>
+                <button class="share-option native" id="native-share-btn">
+                    <span>🔗</span> Otras opciones
                 </button>
             </div>
         </div>
@@ -154,10 +203,32 @@ function showDetails(place) {
     
     modal.style.display = 'block';
     
-    document.getElementById('share-btn').addEventListener('click', () => {
+    const shareToggle = document.getElementById('share-toggle-btn');
+    const shareMenu = document.getElementById('share-menu');
+    const nativeShare = document.getElementById('native-share-btn');
+
+    shareToggle.addEventListener('click', () => {
+        shareMenu.classList.toggle('hidden');
+    });
+
+    nativeShare.addEventListener('click', () => {
         sharePlace(place);
     });
 }
+
+window.shareTo = (platform, place) => {
+    const text = encodeURIComponent(`¡Mira este lugar en Almería! ${place.nombre}: ${place.descripcion}`);
+    const url = encodeURIComponent(window.location.href);
+    let shareUrl = '';
+
+    if (platform === 'whatsapp') {
+        shareUrl = `https://wa.me/?text=${text}%20${url}`;
+    } else if (platform === 'telegram') {
+        shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+    }
+
+    window.open(shareUrl, '_blank');
+};
 
 async function sharePlace(place) {
     if (navigator.share) {
